@@ -1,8 +1,15 @@
 import { test, expect } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test('test', async ({ page, context }) => {
+
+    await context.tracing.start({
+    snapshots: true,
+    screenshots: true
+  })
+
 //   await page.getByRole('textbox', { name: 'Product Name' }).click();
   await page.goto('https://simple-crud-apps.vercel.app/');
+  await expect(page).toHaveTitle('Simple CRUD Apps');
 
   await page.getByRole('textbox', { name: 'Product Name' }).fill('Sambal Belut');
 //   await page.getByRole('textbox', { name: 'Product Name' }).press('Tab');
@@ -12,6 +19,7 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Add' }).click();
   await expect(page.getByText('Product ID: ')).toBeVisible();
 
+  await page.getByText('Sambal Belut').isVisible();
   await page.getByRole('button', { name: 'Update' }).first().click();
 //   await page.getByPlaceholder('Current: Sambal Belut').click();
   await page.getByPlaceholder('Current: Sambal Belut').fill('Sambal Terasi Segar');
@@ -22,4 +30,8 @@ test('test', async ({ page }) => {
   await page.locator('.modal-buttons > .btn.btn-update').click();
   await page.getByRole('button', { name: 'Delete' }).first().click();
   await page.locator('.modal-buttons > .btn.btn-delete').click();
+
+  await context.tracing.stop({
+    path: 'test-results/trace_log/simple_crud_trace.zip'
+  })
 });

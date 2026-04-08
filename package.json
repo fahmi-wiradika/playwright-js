@@ -9,7 +9,9 @@
     "test-firefox": "npx playwright test --project=firefox",
     "test-example": "npx playwright test example --project=chromium",
     "test-ui": "npx playwright test example --project=chromium --headed",
-    "test-ui-debug": "npx playwright test tests/xperimental/test.spec.js --project=chromium --headed --debug"
+    "test-ui-debug": "npx playwright test tests/xperimental/test.spec.js --project=chromium --headed --debug",
+    "show-trace": "npx playwright show-trace test-results/trace_log/simple_crud_trace.zip",
+    "crud-codegen": "npx playwright codegen https://simple-crud-apps.vercel.app/"
   },
   "keywords": [],
   "author": "",

@@ -8,7 +8,13 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('get started link', async ({ page }) => {
+test('get started link', async ({ page, context }) => {
+
+  await context.tracing.start({
+    snapshots: true,
+    screenshots: true
+  })
+
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
@@ -16,4 +22,9 @@ test('get started link', async ({ page }) => {
 
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+
+  await context.tracing.stop({
+    path: 'test-results/trace_log/test1_trace.zip'
+  })
+
 });

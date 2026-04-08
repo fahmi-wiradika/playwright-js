@@ -38,12 +38,20 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        args: ['--start-maximized'],
+        viewport: { width: 1920, height: 1080 },
+       },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { 
+        ...devices['Desktop Firefox'],
+        args: ['--start-maximized'],
+        viewport: { width: 1920, height: 1080 },
+       },
     },
 
     // {
