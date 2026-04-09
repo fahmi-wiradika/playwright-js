@@ -1,5 +1,5 @@
-// @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import { on } from 'node:cluster';
 
 /**
  * Read environment variables from file.
@@ -14,6 +14,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  outputDir: './test-results',
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -26,6 +27,15 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    video: {
+      mode: 'on',
+      // size: { width: 640, height: 480 },
+    },
+    // launchOptions:{
+    //   slowMo: 1000
+    // },
+
+    // actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
 
@@ -45,14 +55,14 @@ export default defineConfig({
        },
     },
 
-    {
-      name: 'firefox',
-      use: { 
-        ...devices['Desktop Firefox'],
-        args: ['--start-maximized'],
-        viewport: { width: 1920, height: 1080 },
-       },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { 
+    //     ...devices['Desktop Firefox'],
+    //     args: ['--start-maximized'],
+    //     viewport: { width: 1920, height: 1080 },
+    //    },
+    // },
 
     // {
     //   name: 'webkit',

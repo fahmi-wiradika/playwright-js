@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "playwright-automation",
   "version": "1.0.0",
   "description": "",
@@ -6,6 +7,7 @@
   "scripts": {
     "test-all": "npx playwright test",
     "test-chromium": "npx playwright test --project=chromium",
+    "test-crud": "npx playwright test tests/xperimental/test.spec.js",
     "test-firefox": "npx playwright test --project=firefox",
     "test-example": "npx playwright test example --project=chromium",
     "test-ui": "npx playwright test example --project=chromium --headed",
@@ -18,7 +20,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "1.58.2",
+    "@playwright/test": "^1.58.2",
     "@types/node": "^25.5.0"
   }
 }
