@@ -1,0 +1,11 @@
+{
+    "name": "Bakso Malang",
+    "price": 15000,
+    "quantity": 2,
+    "updatedProduct":
+    { 
+      "Quantity": 3,
+      "Price": 20000,
+      "Name": "Bakso Spesial"
+    }
+  }
