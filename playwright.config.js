@@ -27,8 +27,9 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    // Screen Recording
     video: {
-      mode: 'on',
+      mode: 'on-first-retry',
       // size: { width: 640, height: 480 },
     },
     // launchOptions:{
@@ -41,7 +42,10 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    // Browser mode
     headless: true,
+
   },
 
   /* Configure projects for major browsers */
@@ -55,19 +59,22 @@ export default defineConfig({
        },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { 
-    //     ...devices['Desktop Firefox'],
-    //     args: ['--start-maximized'],
-    //     viewport: { width: 1920, height: 1080 },
-    //    },
-    // },
+    {
+      name: 'firefox',
+      use: { 
+        ...devices['Desktop Firefox'],
+        args: ['--start-maximized'],
+        viewport: { width: 1920, height: 1080 },
+       },
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'webkit',
+      use: { 
+        ...devices['Desktop Safari'] },
+        args: ['--start-maximized'],
+        viewport: { width: 1920, height: 1080 },
+    },
 
     /* Test against mobile viewports. */
     // {
