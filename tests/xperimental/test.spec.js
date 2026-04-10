@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { request } from 'node:https';
 
 let page, context, productId, notification, productRow;
 
@@ -12,7 +13,7 @@ test.beforeAll(async ({ browser })=> {
 
   page = await context.newPage();
 
-  await page.goto('https://simple-crud-apps.vercel.app/');
+  // await page.goto('https://simple-crud-apps.vercel.app/');
 
 })
 
@@ -23,15 +24,24 @@ test.afterAll(async () => {
 
 
 test('Verify Page Title and Products API', async () => {
-  await expect(page).toHaveTitle('Simple CRUD Apps');
-  const productsResponsePromise = page.waitForResponse(
-    response => response.url().includes('/api/products') && response.request().method() === 'GET'
-  );
+  let responseBody;
 
-  const productsResponse = await productsResponsePromise;
-  expect(productsResponse.status()).toBe(200);
-  const responseBody = await productsResponse.json();
+  await page.route('**/api/products', async (route, request) => {
+    if (request.method() === 'GET') {
+      const response = await route.fetch();
+      responseBody = await response.json();
+      await route.fulfill({ response }); // pass response through to the page
+    } else {
+      await route.continue();
+    }
+  });
+
+  await page.goto('https://simple-crud-apps.vercel.app/');
+  await expect(page).toHaveTitle('Simple CRUD Apps');
+  await expect(page.locator('div.product-item').first()).toBeVisible();
+
   expect(Array.isArray(responseBody)).toBeTruthy();
+
   
 });
 
