@@ -1,4 +1,4 @@
-import { test, expect } from '../../../src/fixtures/base.fixture.js';
+import { test, expect } from '../../../fixtures/base.fixture.js';
 import productData from '../../../data/json/singleProduct.json';
 
 test.describe.serial('UI CRUD - Product Management', () => {
@@ -11,14 +11,18 @@ test.describe.serial('UI CRUD - Product Management', () => {
 
   let productId = '';
 
-  test('Verify Page Title and Products API', async ({ page, productPage }) => {
+  test.beforeEach('Setup Crud Page', async({ page, productPage }) => {
     await productPage.visit();
+  })
+
+  test('Verify Page Title and Products API', async ({ page, productPage }) => {
+    // await productPage.visit();
     await expect(page).toHaveTitle('Simple CRUD Apps');
     await productPage.verifyProductListLoaded();
   });
 
   test('Create Product and Extract Product ID', async ({ productPage }) => {
-    await productPage.visit();
+    // await productPage.visit();
     await productPage.addProduct(initialName, initialPrice, initialQuantity);
     await productPage.verifyNotificationVisible();
     productId = await productPage.getProductIdFromNotification();
@@ -32,8 +36,8 @@ test.describe.serial('UI CRUD - Product Management', () => {
   });
 
   test('Update Product by ID', async ({ page, productPage }) => {
-    await productPage.visit();
-    await productPage.updateProduct(productId, updatedName, updatedPrice, updatedQuantity);
+    // await productPage.visit();
+    await productPage.updateProductById(productId, updatedName, updatedPrice, updatedQuantity);
     await productPage.verifyNotificationVisible();
     await productPage.waitNotificationToDisappear();
     await productPage.assertProductDetails(productId, {
@@ -48,8 +52,8 @@ test.describe.serial('UI CRUD - Product Management', () => {
   });
 
   test('Delete Product by ID', async ({ page, productPage }) => {
-    await productPage.visit();
-    await productPage.deleteProduct(productId);
+    // await productPage.visit();
+    await productPage.deleteProductById(productId);
     await productPage.verifyNotificationVisible();
     await productPage.waitNotificationToDisappear();
 
