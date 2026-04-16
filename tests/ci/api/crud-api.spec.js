@@ -1,4 +1,4 @@
-import { test, expect } from '../../../src/fixtures/base.fixture.js';
+import { test, expect } from '../../../fixtures/base.fixture.js';
 import productData from '../../../data/json/singleProduct.json';
 
 test.use({ baseURL: 'https://simple-crud-apps.vercel.app/' });
